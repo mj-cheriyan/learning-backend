@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.learning.backend.dto.UserRegisterRequest;
 import com.learning.backend.entity.User;
 import com.learning.backend.service.UserService;
 
@@ -21,7 +22,12 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<User> register(@Valid @RequestBody User user) {
+    public ResponseEntity<User> register(@Valid @RequestBody UserRegisterRequest request) {
+        User user = new User();
+        user.setEmail(request.getEmail());
+        user.setPassword(request.getPassword());
+        user.setRole(request.getRole());
+
         return ResponseEntity.ok(userService.register(user));
     }
 }
